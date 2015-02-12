@@ -1,0 +1,354 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }
+
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>AstraImage.sikuli\AstraImage.sikuli</h2> <a href="AstraImage.sikuli\AstraImage.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+<span class="kw">from</span> sikuli.Sikuli <span class="kw">import</span> *
+<span class="cmt">#
+</span><span class="kw">import</span> subprocess, sys, os, os.path, shutil, ntpath, re
+<span class="kw">from</span> SimpleXMLRPCServer <span class="kw">import</span> SimpleXMLRPCServer <span class="kw">as</span> Server
+srv = Server((<span class="str">"127.0.0.1"</span>, <span class="dig">1337</span>),allow_none=True) <span class="cmt"># as an example on the same machine</span>
+<span class="kw">if</span> <span class="kw">not</span> srv: exit(<span class="dig">1</span>)
+<span class="cmt">#
+</span>setAutoWaitTimeout(<span class="dig">300</span>)
+<span class="str">'''
+    20150130
+    Moved to git and removed locally significat versioning
+  
+    This script is run after AS2StackWalk.py
+    Recreated for Pro on 20120509
+     Updated to chunk into defs
+
+        20120928
+        Started from scratch re-writing Astro caps
+        This file loads previously saved pickle cap data
+
+        20121014
+    Adding full raw and sharp support, save as new
+
+    Major rework 20121105 - Exceptions, load dict from os.listdir for real caps
+
+    Updated 20130620 - Added os.list dir instead of dict and new defs to pull out time from file
+
+    Reworked 20130709 to use XML RPC and only leave custom Def's behind, rest is done via python calls
+
+Updated pathing for NewDocDirs2 20130418
+'''</span>
+
+<span class="kw">import</span> subprocess, sys, os, os.path, shutil, collections, fnmatch, re
+<span class="kw">from</span> collections <span class="kw">import</span> defaultdict
+
+<span class="kw">print</span> <span class="str">'\nSikuli script started!\n'</span>
+<span class="cmt">#Vars:
+</span>
+Stacked=<span class="str">'D:\\B-Sorted\\Astronomy\\Planetary\\20-Stacked\\'</span>
+sharped = Stacked <span class="cmt"># Location specified by AS2StackWalk.py</span>
+
+<span class="cmt">#data to work with, in simple terms, the captured data
+</span>Ver = <span class="str">'v10'</span>
+RGBd = <span class="str">'D:\\B-Sorted\\Astronomy\\Planetary\\30-Sharped+RGB\\'</span>
+AS2ed = <span class="str">"AS2ed"</span>
+FileSyntax = <span class="str">'10m7515'</span>
+
+
+
+<span class="kw">def</span> sharpeningsetup(Duration,PSF,Iter):
+    <span class="str">'Primes the decon settings to taste - per Google Drive Sharpening Settings File'</span>
+    <span class="kw">print</span> <span class="str">'\n[Sikuli] Setting up sharpening settings\n'</span>
+    <span class="cmt">#
+</span>    <span class="cmt"># Set Variables for each channel
+</span>    <span class="cmt"># Red is typically the highest and the rest will 'down' from there
+</span>    <span class="cmt">#
+</span>    <span class="cmt"># Each is a delta up or down from previous default/channel
+</span>    <span class="cmt">#
+</span>    <span class="cmt">#Existing is 1.0/10 -&gt; Mars G = 1.2/16
+</span>    <span class="cmt">#RPSF = 2
+</span>    <span class="cmt">#RITER = 6
+</span>    switchApp(<span class="str">"Astra"</span>)
+    <span class="skw">sleep</span>(<span class="dig">0.2</span>)
+    <span class="skw">type</span>(<span class="str">"l"</span>,KEY_CTRL)
+    <span class="skw">sleep</span>(<span class="dig">0.2</span>)
+    <span class="skw">click</span>(Pattern(<img src="PointSpreadF.png" />).similar(<span class="dig">0.57</span>).targetOffset(-<span class="dig">368</span>,-<span class="dig">137</span>))
+    <span class="skw">sleep</span>(<span class="dig">0.2</span>)
+    <span class="skw">click</span>(Pattern(<img src="PointSpreadF.png" />).similar(<span class="dig">0.57</span>).targetOffset(-<span class="dig">135</span>,-<span class="dig">9</span>))
+    <span class="skw">sleep</span>(<span class="dig">0.2</span>)
+    <span class="cmt">#Initial Settings are 1/10, changes for Red to 1.2 and 18
+</span>    <span class="kw">if</span> PSF &gt;=<span class="dig">1</span>:
+        <span class="kw">for</span> n <span class="kw">in</span> range(PSF):
+                <span class="skw">type</span>(Key.UP)
+        <span class="skw">type</span>(Key.TAB)
+    <span class="kw">elif</span> PSF &lt; <span class="dig">1</span>:
+        <span class="kw">for</span> n <span class="kw">in</span> range(PSF):
+                <span class="skw">type</span>(Key.DOWN)
+        <span class="skw">type</span>(Key.TAB)
+    <span class="kw">if</span> Iter &gt;=<span class="dig">1</span>:
+        <span class="kw">for</span> n <span class="kw">in</span> range(Iter):
+                <span class="skw">type</span>(Key.UP)
+    <span class="kw">if</span> Iter &lt; <span class="dig">1</span>:
+        <span class="kw">for</span> n <span class="kw">in</span> range(Iter):
+                <span class="skw">type</span>(Key.DOWN)
+    <span class="skw">sleep</span>(<span class="dig">1</span>)
+    <span class="skw">dragDrop</span>(Pattern(<img src="1395682627883.png" />).targetOffset(<span class="dig">141</span>,<span class="dig">35</span>), Pattern(<img src="1395682632171.png" />).targetOffset(-<span class="dig">263</span>,-<span class="dig">211</span>))
+
+    <span class="kw">if</span> exists(Pattern(<img src="1395682602331.png" />).targetOffset(<span class="dig">339</span>,<span class="dig">62</span>),<span class="dig">2</span>):<span class="skw">click</span>(getLastMatch())
+    n=<span class="dig">1</span>
+    Timer=Duration
+    <span class="kw">for</span> n <span class="kw">in</span> range(Timer):
+        <span class="kw">print</span> <span class="str">'Waiting for '</span>+str(n)+<span class="str">' of '</span>+str(Timer)+<span class="str">' sec'</span>
+        n=n+<span class="dig">1</span>
+        <span class="skw">sleep</span>(<span class="dig">1</span>)
+    <span class="skw">click</span>(Pattern(<img src="1395682632171.png" />).targetOffset(<span class="dig">256</span>,<span class="dig">176</span>))
+    waitVanish(<img src="1395682602331.png" />)
+
+<span class="kw">def</span> prime(DATE, TIME):
+    <span class="kw">print</span> <span class="str">'\n[Sikuli] Loading initial files to get AstraImage in order\n'</span>
+    sharpfldr = os.path.join(sharped, DATE, TIME, <span class="str">'v10\\'</span>)
+    firstfile=os.path.join(sharpfldr+os.listdir(sharpfldr)[<span class="dig">1</span>])
+    switchApp(<span class="str">"Astra"</span>)
+    <span class="skw">click</span>(<img src="1373393362342.png" />)
+    switchApp(<span class="str">"Astra"</span>)
+    <span class="skw">click</span>(<img src="1373393362342.png" />)
+    <span class="skw">type</span>(<span class="str">"f"</span>,KEY_ALT)
+    <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+    <span class="skw">type</span>(<span class="str">"o"</span>)
+    <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+    <span class="skw">type</span>(<span class="str">"n"</span>,KEY_ALT)
+    <span class="skw">sleep</span>(<span class="dig">0.75</span>)
+    <span class="skw">type</span>(Key.DELETE)
+    <span class="skw">sleep</span>(<span class="dig">0.75</span>)
+    <span class="kw">print</span>(<span class="str">'\nSikuli is loading file '</span>+str(firstfile)+<span class="str">'\n'</span>)
+    paste(str(firstfile))
+    <span class="skw">sleep</span>(<span class="dig">0.75</span>)
+    <span class="skw">type</span>(Key.ENTER)
+
+
+
+<span class="kw">def</span> sharp(ToBeSharped, DATE, TIME,AISettingsVer):
+    <span class="str">'Relies on having the proper folders setup for relative pathing from prime Def.  Fed files from ColorMatch Def'</span>
+    <span class="kw">print</span> <span class="str">'\n[Sikuli] Starting to sharpen your files...\n'</span>
+    switchApp(<span class="str">"Astra"</span>)
+    <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+    <span class="skw">type</span>(<span class="str">"f"</span>,KEY_ALT)
+    <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+    <span class="skw">type</span>(<span class="str">"o"</span>)
+    <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+    <span class="skw">type</span>(<span class="str">"n"</span>,KEY_ALT)
+    <span class="skw">sleep</span>(<span class="dig">0.75</span>)
+    <span class="skw">type</span>(Key.DELETE)
+    <span class="skw">sleep</span>(<span class="dig">0.75</span>)
+    paste(str(ToBeSharped))
+    <span class="skw">sleep</span>(<span class="dig">0.75</span>)
+    <span class="skw">type</span>(Key.ENTER)
+    <span class="skw">sleep</span>(<span class="dig">0.75</span>)
+    <span class="kw">if</span> exists((Pattern(<img src="1401392122846.png" />).similar(<span class="dig">0.81</span>).targetOffset(-<span class="dig">4</span>,<span class="dig">38</span>)),<span class="dig">2</span>):
+        <span class="kw">print</span> <span class="str">'\n\nSikuli found a file load error!\n\n'</span>
+        <span class="skw">click</span>(getLastMatch())
+        exit()
+    <span class="kw">else</span>:
+        <span class="kw">pass</span>
+    switchApp(<span class="str">"Astra"</span>)
+    <span class="skw">sleep</span>(<span class="dig">0.75</span>)
+    <span class="skw">type</span>(<span class="str">"l"</span>,KEY_CTRL)
+    <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+    <span class="cmt">#type(Key.ENTER)
+</span>    <span class="skw">click</span>(Pattern(<img src="PointSpreadF.png" />).similar(<span class="dig">0.57</span>).targetOffset(<span class="dig">266</span>,<span class="dig">181</span>))
+    waitVanish(<img src="PointSpreadF-3.png" />)
+    <span class="skw">sleep</span>(<span class="dig">0.75</span>)
+    switchApp(<span class="str">"Astra"</span>)
+    <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+    <span class="skw">type</span>(<span class="str">"s"</span>,KEY_CTRL)
+    <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+    paste(<span class="str">'Ver-'</span>+AISettingsVer+<span class="str">'-'</span>+ToBeSharped)
+    <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+    <span class="skw">type</span>(<span class="str">"\n"</span>)
+    <span class="kw">if</span> exists(Pattern(<img src="1423532239029.png" />).targetOffset(<span class="dig">57</span>,<span class="dig">33</span>),<span class="dig">2</span>):
+        <span class="skw">click</span>(getLastMatch())
+
+    <span class="kw">if</span> exists(Pattern(<img src="1394391875003.png" />).similar(<span class="dig">0.56</span>).targetOffset(-<span class="dig">3</span>,<span class="dig">88</span>),<span class="dig">2</span>):
+            <span class="skw">click</span>(getLastMatch())
+            waitVanish(Pattern(<img src="1394391875003.png" />).similar(<span class="dig">0.56</span>).targetOffset(-<span class="dig">3</span>,<span class="dig">88</span>))
+
+
+<span class="kw">def</span> RGB(RED,GREEN,BLUE,RGB,DATE, TIME,Duration):
+    <span class="kw">print</span> <span class="str">'\n[Sikuli] is using AstraImage to combine channels to RGB color image\n'</span>
+    <span class="skw">sleep</span>(<span class="dig">1</span>)
+    <span class="kw">for</span> n <span class="kw">in</span> range(<span class="dig">1</span>):
+        switchApp(<span class="str">"Astra"</span>)
+        <span class="skw">sleep</span>(<span class="dig">1</span>)
+        <span class="skw">type</span>(<span class="str">"p"</span>,KEY_ALT)
+        <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+        <span class="skw">type</span>(<span class="str">"o"</span>)
+        <span class="skw">sleep</span>(<span class="dig">0.2</span>)
+        <span class="skw">type</span>(Key.TAB + <span class="str">" "</span>)
+        <span class="skw">sleep</span>(<span class="dig">0.75</span>)
+        sharpfldr = os.path.join(sharped, DATE, TIME, <span class="str">'v10'</span>)
+        paste(sharpfldr)
+        <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+        <span class="skw">type</span>(Key.ENTER)
+        <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+        <span class="skw">type</span>(<span class="str">"n"</span>,KEY_ALT)
+        <span class="skw">sleep</span>(<span class="dig">0.75</span>)
+        paste(RED)
+        <span class="skw">sleep</span>(<span class="dig">0.75</span>)
+        <span class="skw">type</span>(Key.ENTER)
+        <span class="skw">sleep</span>(<span class="dig">0.75</span>)
+        <span class="skw">type</span>(Key.TAB + Key.TAB + Key.TAB + Key.TAB + Key.TAB + <span class="str">" "</span>)
+        <span class="skw">type</span>(<span class="str">"n"</span>,KEY_ALT)
+        <span class="skw">sleep</span>(<span class="dig">0.75</span>)
+        paste(GREEN)
+        <span class="skw">sleep</span>(<span class="dig">0.75</span>)
+        <span class="skw">type</span>(Key.ENTER)
+        <span class="skw">sleep</span>(<span class="dig">0.75</span>)
+        <span class="skw">type</span>(Key.TAB + Key.TAB + Key.TAB + Key.TAB + Key.TAB + <span class="str">" "</span>)
+        <span class="skw">type</span>(<span class="str">"n"</span>,KEY_ALT)
+        <span class="skw">sleep</span>(<span class="dig">0.75</span>)
+        paste(BLUE)
+        <span class="skw">sleep</span>(<span class="dig">0.75</span>)
+        <span class="skw">type</span>(Key.ENTER)
+        <span class="skw">sleep</span>(<span class="dig">0.75</span>)
+        <span class="skw">type</span>(Key.TAB + Key.TAB + Key.TAB + Key.TAB + Key.TAB + Key.TAB + Key.DOWN + <span class="str">" "</span>)
+        <span class="skw">sleep</span>(<span class="dig">0.2</span>)
+        <span class="kw">for</span> n <span class="kw">in</span> range(<span class="dig">17</span>):
+            <span class="skw">type</span>(Key.TAB)
+        <span class="skw">click</span>(Pattern(<img src="1394806810279.png" />).targetOffset(<span class="dig">29</span>,<span class="dig">194</span>))
+        switchApp(<span class="str">"Astra"</span>)
+        n=<span class="dig">1</span>
+        Timer=Duration
+        <span class="kw">for</span> n <span class="kw">in</span> range(Timer):
+            <span class="kw">print</span> <span class="str">'Waiting for '</span>+str(n)+<span class="str">' of '</span>+str(Timer)+<span class="str">' sec'</span>
+            n=n+<span class="dig">1</span>
+            <span class="skw">sleep</span>(<span class="dig">1</span>)
+        <span class="skw">sleep</span>(<span class="dig">10.0</span>)
+        <span class="skw">click</span>(Pattern(<img src="1394501688302.png" />).similar(<span class="dig">0.42</span>).targetOffset(<span class="dig">232</span>,<span class="dig">257</span>))
+        <span class="skw">sleep</span>(<span class="dig">2</span>)
+        <span class="skw">type</span>(<span class="str">"s"</span>,KEY_CTRL)
+        <span class="skw">type</span>(<span class="str">"n"</span>,KEY_ALT)
+        <span class="skw">sleep</span>(<span class="dig">0.75</span>)
+        paste(RGB)
+        <span class="skw">sleep</span>(<span class="dig">0.75</span>)
+        <span class="skw">type</span>(Key.ENTER)
+        <span class="skw">sleep</span>(<span class="dig">2</span>)
+        <span class="skw">type</span>(<span class="str">"y"</span>,KEY_ALT)
+        <span class="skw">sleep</span>(<span class="dig">1</span>)
+        <span class="skw">type</span>(Key.ENTER)
+        <span class="skw">sleep</span>(<span class="dig">1</span>)
+        <span class="skw">type</span>(Key.ENTER)
+        <span class="skw">sleep</span>(<span class="dig">1</span>)
+        <span class="skw">type</span>(Key.ENTER)
+
+
+<span class="kw">def</span> TimeMatch(st):
+        match=re.search(<span class="str">r'[0-9]+\.[0-9]'</span>, st)
+        <span class="kw">if</span> match:
+                result = match.group()
+                <span class="kw">print</span> result
+                <span class="kw">return</span> result
+        <span class="kw">else</span>:
+                <span class="kw">print</span> <span class="str">"Not Found"</span>
+
+<span class="kw">def</span> Counter(TIME,count,QueuedTimes):
+    <span class="kw">print</span>
+    <span class="kw">print</span> <span class="str">"__________________________________________________________________________________"</span>
+    <span class="kw">print</span> <span class="str">"Time is "</span>+TIME+<span class="str">" ("</span>+str(count)+<span class="str">" of "</span>+str(len(QueuedTimes))+<span class="str">")"</span>
+    <span class="kw">print</span> <span class="str">"__________________________________________________________________________________"</span>
+    <span class="kw">print</span>
+
+
+<span class="kw">def</span> closeAI():
+    <span class="kw">print</span> <span class="str">'\nSikuli is closing AstraImage\n'</span>
+    <span class="skw">sleep</span>(<span class="dig">2</span>)
+    switchApp(<span class="str">"Astra"</span>)
+    <span class="skw">sleep</span>(<span class="dig">2</span>)
+    switchApp(<span class="str">"Astra"</span>)
+    <span class="skw">sleep</span>(<span class="dig">2</span>)
+    <span class="skw">click</span>(<img src="1373393362342.png" />)
+    <span class="skw">type</span>(<span class="str">"f"</span>,KEY_ALT)
+    <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+    <span class="skw">type</span>(<span class="str">"x"</span>)
+    <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+
+
+<span class="cmt">#
+</span><span class="cmt">#File Dictionaries
+</span><span class="cmt">#
+</span>fileloaderror = Pattern(<img src="ZiAstronomyi.png" />).similar(<span class="dig">0.36</span>)
+fileloaderrorB = Pattern(<img src="ZlAstronomyl.png" />).similar(<span class="dig">0.64</span>)
+
+srv.register_function(sharpeningsetup)
+srv.register_function(prime)
+srv.register_function(sharp)
+srv.register_function(RGB)
+srv.register_function(TimeMatch)
+srv.register_function(Counter)
+srv.register_function(closeAI)
+srv.serve_forever()
+</pre>
+</body>
+</html>

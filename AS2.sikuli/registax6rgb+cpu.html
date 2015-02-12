@@ -1,0 +1,268 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }
+
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>AS2_08.sikuli\AS2-MAP+15xWL.sikuli</h2> <a href="AS2_08.sikuli\AS2-MAP+15xWL.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+<span class="kw">from</span> sikuli.Sikuli <span class="kw">import</span> *
+<span class="kw">import</span> os
+setAutoWaitTimeout(<span class="dig">600</span>)
+<span class="cmt">#Define Watchdog variables
+</span>CMD = <span class="str">"top -b -n 10 | gawk '/RegiS/ {print $9}'"</span>
+test = True
+cpuMax = <span class="dig">50</span>
+<span class="cmt">#
+</span><span class="cmt"># RED
+</span><span class="cmt">#
+</span>os.popen(<span class="str">"wine /home/miphilli/.wine/drive_c/Program\ Files/RegiStax\ 6/RegiStax6.exe"</span>)
+os.popen(<span class="str">"nautilus /home/miphilli/Documents/4-Temp/irisscratch\ 2000-01-01"</span>)
+<span class="skw">sleep</span>(<span class="dig">20</span>)
+switchApp(<span class="str">"irisscratch"</span>)
+<span class="skw">sleep</span>(<span class="dig">2</span>)
+<span class="skw">type</span>(<span class="str">"Rtop2000\n"</span>)
+<span class="skw">sleep</span>(<span class="dig">10</span>)
+<span class="skw">wait</span>(Pattern(<img src="1285207768525.png" />).similar(<span class="dig">0.82</span>))
+switchApp(<span class="str">"Rtop2000"</span>)
+<span class="skw">sleep</span>(<span class="dig">1</span>)
+<span class="skw">type</span>(<span class="str">"a"</span>,KEY_CTRL)
+<span class="skw">wait</span>(<img src="ColourlvShow.png" />)
+switchApp(<span class="str">"Rtop2000"</span>)
+<span class="skw">dragDrop</span>(<img src="QDDDZ2fItqDD.png" />, <img src="ColourlvShow.png" />)
+<span class="skw">sleep</span>(<span class="dig">10</span>)
+<span class="skw">click</span>(Pattern(<img src="SelectAlignM.png" />).similar(<span class="dig">0.00</span>).targetOffset(-<span class="dig">72</span>,-<span class="dig">76</span>))
+
+<span class="skw">sleep</span>(<span class="dig">15</span>)
+<span class="skw">click</span>(<img src="RIIQIIStack_.png" />)
+<span class="skw">sleep</span>(<span class="dig">5</span>)
+switchApp(<span class="str">"Rtop2000"</span>)
+<span class="skw">sleep</span>(<span class="dig">3</span>)
+<span class="skw">type</span>(Key.BACKSPACE)
+<span class="skw">sleep</span>(<span class="dig">5</span>)
+<span class="skw">type</span>(<span class="str">"Gtop2000\n"</span>)
+<span class="skw">sleep</span>(<span class="dig">45</span>)
+<span class="skw">type</span>(<span class="str">"a"</span>,KEY_CTRL)
+switchApp(<span class="str">"Thunder"</span>)
+<span class="kw">while</span> True:
+        RegistaxCPU = os.popen(CMD).readlines()
+        cpu = float(RegistaxCPU[<span class="dig">0</span>])
+        <span class="kw">if</span> test: <span class="kw">print</span> cpu
+        <span class="kw">if</span> cpu &lt; cpuMax : <span class="kw">break</span>
+        <span class="skw">wait</span>(<span class="dig">5</span>)
+        <span class="kw">print</span>(RegistaxCPU)
+switchApp(<span class="str">"RegiStax"</span>)
+<span class="skw">wait</span>(Pattern(<img src="100.png" />).similar(<span class="dig">0.78</span>))
+<span class="skw">click</span>(Pattern(<img src="100.png" />).similar(<span class="dig">0.78</span>))
+<span class="skw">click</span>(<img src="AgEl1Armlimi.png" />)
+<span class="skw">wait</span>(<img src="IaCkStackSta.png" />)
+<span class="skw">click</span>(<img src="IaCkStackSta.png" />)
+switchApp(<span class="str">"Thunder"</span>)
+<span class="kw">while</span> True:
+        RegistaxCPU = os.popen(CMD).readlines()
+        cpu = float(RegistaxCPU[<span class="dig">0</span>])
+        <span class="kw">if</span> test: <span class="kw">print</span> cpu
+        <span class="kw">if</span> cpu &lt; cpuMax : <span class="kw">break</span>
+        <span class="skw">wait</span>(<span class="dig">5</span>)
+        <span class="kw">print</span>(RegistaxCPU)
+switchApp(<span class="str">"RegiStax"</span>)
+<span class="skw">wait</span>(Pattern(<img src="100.png" />).similar(<span class="dig">0.78</span>))
+<span class="skw">click</span>(Pattern(<img src="100.png" />).similar(<span class="dig">0.78</span>))
+<span class="skw">click</span>(Pattern(<img src="IaCkStackSta.png" />).similar(<span class="dig">0.72</span>).targetOffset(<span class="dig">36</span>,-<span class="dig">12</span>))
+<span class="skw">sleep</span>(<span class="dig">1</span>)
+<span class="skw">type</span>(<span class="str">"n"</span>,KEY_ALT)
+<span class="skw">sleep</span>(<span class="dig">2</span>)
+paste(<span class="str">'..\\r.tif'</span>)
+<span class="skw">sleep</span>(<span class="dig">2</span>)
+<span class="skw">type</span>(Key.ENTER)
+<span class="skw">sleep</span>(<span class="dig">1</span>)
+<span class="skw">type</span>(<span class="str">" "</span>,KEY_ALT)
+<span class="skw">sleep</span>(<span class="dig">1</span>)
+<span class="skw">type</span>(<span class="str">"c"</span>)
+<span class="skw">sleep</span>(<span class="dig">1</span>)
+<span class="cmt">#
+</span><span class="cmt"># GREEN
+</span><span class="cmt">#
+</span>os.popen(<span class="str">"wine /home/miphilli/.wine/drive_c/Program\ Files/RegiStax\ 6/RegiStax6.exe"</span>)
+<span class="skw">wait</span>(<img src="ColourlvShow.png" />)
+switchApp(<span class="str">"Gtop2000"</span>)
+<span class="skw">dragDrop</span>(<img src="QDDDZ2fItqDD.png" />, <img src="ColourlvShow.png" />)
+<span class="skw">sleep</span>(<span class="dig">10</span>)
+<span class="skw">click</span>(Pattern(<img src="SelectAlignM.png" />).similar(<span class="dig">0.00</span>).targetOffset(-<span class="dig">72</span>,-<span class="dig">76</span>))
+
+<span class="skw">sleep</span>(<span class="dig">15</span>)
+<span class="skw">click</span>(<img src="RIIQIIStack_.png" />)
+<span class="skw">sleep</span>(<span class="dig">5</span>)
+switchApp(<span class="str">"Gtop2000"</span>)
+<span class="skw">sleep</span>(<span class="dig">3</span>)
+<span class="skw">type</span>(Key.BACKSPACE)
+<span class="skw">sleep</span>(<span class="dig">5</span>)
+<span class="skw">type</span>(<span class="str">"Btop2000\n"</span>)
+<span class="skw">sleep</span>(<span class="dig">45</span>)
+<span class="skw">type</span>(<span class="str">"a"</span>,KEY_CTRL)
+switchApp(<span class="str">"Thunder"</span>)
+<span class="kw">while</span> True:
+        RegistaxCPU = os.popen(CMD).readlines()
+        cpu = float(RegistaxCPU[<span class="dig">0</span>])
+        <span class="kw">if</span> test: <span class="kw">print</span> cpu
+        <span class="kw">if</span> cpu &lt; cpuMax : <span class="kw">break</span>
+        <span class="skw">wait</span>(<span class="dig">5</span>)
+        <span class="kw">print</span>(RegistaxCPU)
+switchApp(<span class="str">"RegiStax"</span>)
+<span class="skw">wait</span>(<img src="100.png" />)
+<span class="skw">click</span>(<img src="100.png" />)
+<span class="skw">click</span>(<img src="AgEl1Armlimi.png" />)
+<span class="skw">wait</span>(<img src="IaCkStackSta.png" />)
+<span class="skw">click</span>(<img src="IaCkStackSta.png" />)
+switchApp(<span class="str">"Thunder"</span>)
+<span class="kw">while</span> True:
+        RegistaxCPU = os.popen(CMD).readlines()
+        cpu = float(RegistaxCPU[<span class="dig">0</span>])
+        <span class="kw">if</span> test: <span class="kw">print</span> cpu
+        <span class="kw">if</span> cpu &lt; cpuMax : <span class="kw">break</span>
+        <span class="skw">wait</span>(<span class="dig">5</span>)
+        <span class="kw">print</span>(RegistaxCPU)
+switchApp(<span class="str">"RegiStax"</span>)
+<span class="skw">wait</span>(Pattern(<img src="1UU.png" />).similar(<span class="dig">0.74</span>))
+<span class="skw">click</span>(Pattern(<img src="1UU.png" />).similar(<span class="dig">0.75</span>))
+<span class="skw">click</span>(Pattern(<img src="IaCkStackSta.png" />).similar(<span class="dig">0.72</span>).targetOffset(<span class="dig">36</span>,-<span class="dig">12</span>))
+<span class="skw">sleep</span>(<span class="dig">1</span>)
+<span class="skw">type</span>(<span class="str">"n"</span>,KEY_ALT)
+<span class="skw">sleep</span>(<span class="dig">2</span>)
+paste(<span class="str">'..\\g.tif'</span>)
+<span class="skw">sleep</span>(<span class="dig">2</span>)
+<span class="skw">type</span>(Key.ENTER)
+<span class="skw">sleep</span>(<span class="dig">1</span>)
+<span class="skw">type</span>(<span class="str">" "</span>,KEY_ALT)
+<span class="skw">sleep</span>(<span class="dig">1</span>)
+<span class="skw">type</span>(<span class="str">"c"</span>)
+<span class="skw">sleep</span>(<span class="dig">1</span>)
+<span class="cmt">#
+</span><span class="cmt"># BLUE
+</span><span class="cmt">#
+</span>os.popen(<span class="str">"wine /home/miphilli/.wine/drive_c/Program\ Files/RegiStax\ 6/RegiStax6.exe"</span>)
+<span class="skw">wait</span>(<img src="ColourlvShow.png" />)
+switchApp(<span class="str">"Btop2000"</span>)
+<span class="skw">dragDrop</span>(<img src="QDDDZ2fItqDD.png" />, <img src="ColourlvShow.png" />)
+<span class="skw">sleep</span>(<span class="dig">10</span>)
+<span class="skw">click</span>(Pattern(<img src="SelectAlignM.png" />).similar(<span class="dig">0.00</span>).targetOffset(-<span class="dig">72</span>,-<span class="dig">76</span>))
+
+<span class="skw">sleep</span>(<span class="dig">15</span>)
+<span class="skw">click</span>(<img src="RIIQIIStack_.png" />)
+<span class="skw">sleep</span>(<span class="dig">5</span>)
+switchApp(<span class="str">"Btop2000"</span>)
+<span class="skw">sleep</span>(<span class="dig">3</span>)
+<span class="skw">type</span>(Key.BACKSPACE)
+switchApp(<span class="str">"Thunder"</span>)
+<span class="kw">while</span> True:
+        RegistaxCPU = os.popen(CMD).readlines()
+        cpu = float(RegistaxCPU[<span class="dig">0</span>])
+        <span class="kw">if</span> test: <span class="kw">print</span> cpu
+        <span class="kw">if</span> cpu &lt; cpuMax : <span class="kw">break</span>
+        <span class="skw">wait</span>(<span class="dig">5</span>)
+        <span class="kw">print</span>(RegistaxCPU)
+switchApp(<span class="str">"RegiStax"</span>)
+<span class="skw">wait</span>(Pattern(<img src="100.png" />).similar(<span class="dig">0.78</span>))
+<span class="skw">click</span>(Pattern(<img src="100.png" />).similar(<span class="dig">0.78</span>))
+<span class="skw">click</span>(<img src="AgEl1Armlimi.png" />)
+<span class="skw">wait</span>(<img src="IaCkStackSta.png" />)
+<span class="skw">click</span>(<img src="IaCkStackSta.png" />)
+switchApp(<span class="str">"Thunder"</span>)
+<span class="kw">while</span> True:
+        RegistaxCPU = os.popen(CMD).readlines()
+        cpu = float(RegistaxCPU[<span class="dig">0</span>])
+        <span class="kw">if</span> test: <span class="kw">print</span> cpu
+        <span class="kw">if</span> cpu &lt; cpuMax : <span class="kw">break</span>
+        <span class="skw">wait</span>(<span class="dig">5</span>)
+        <span class="kw">print</span>(RegistaxCPU)
+switchApp(<span class="str">"RegiStax"</span>)
+<span class="skw">wait</span>(Pattern(<img src="1UU.png" />).similar(<span class="dig">0.74</span>))
+<span class="skw">click</span>(Pattern(<img src="1UU.png" />).similar(<span class="dig">0.75</span>))
+<span class="skw">click</span>(Pattern(<img src="IaCkStackSta.png" />).similar(<span class="dig">0.72</span>).targetOffset(<span class="dig">36</span>,-<span class="dig">12</span>))
+<span class="skw">sleep</span>(<span class="dig">1</span>)
+<span class="skw">type</span>(<span class="str">"n"</span>,KEY_ALT)
+<span class="skw">sleep</span>(<span class="dig">2</span>)
+paste(<span class="str">'..\\b.tif'</span>)
+<span class="skw">sleep</span>(<span class="dig">2</span>)
+<span class="skw">type</span>(Key.ENTER)
+<span class="skw">sleep</span>(<span class="dig">1</span>)
+<span class="skw">type</span>(<span class="str">" "</span>,KEY_ALT)
+<span class="skw">sleep</span>(<span class="dig">1</span>)
+<span class="skw">type</span>(<span class="str">"n"</span>)
+<span class="skw">sleep</span>(<span class="dig">1</span>)
+switchApp(<span class="str">"irisscratch"</span>)
+<span class="skw">sleep</span>(<span class="dig">2</span>)
+<span class="skw">type</span>(<span class="str">" "</span>,KEY_ALT)
+<span class="skw">sleep</span>(<span class="dig">1</span>)
+<span class="skw">type</span>(<span class="str">"c"</span>)
+<span class="cmt">#sleep(2)
+</span><span class="cmt">#switchApp('FOLDERSWAPPER')
+</span><span class="cmt">#sleep(2)
+</span><span class="cmt">#type(" ")</span>
+</pre>
+</body>
+</html>

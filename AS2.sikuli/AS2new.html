@@ -1,0 +1,184 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }
+
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>AS2_08.sikuli\AS2-MAP+15xWL.sikuli</h2> <a href="AS2_08.sikuli\AS2-MAP+15xWL.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+myScriptPath = <span class="str">"/home/miphilli/Documents/Dropbox/5-Permanent/Sikuli/Linux/Astro/Planetary/v10"</span>
+
+<span class="kw">if</span> <span class="kw">not</span> myScriptPath <span class="kw">in</span> sys.path: sys.path.append(myScriptPath)
+<span class="kw">from</span> sikuli.Sikuli <span class="kw">import</span> *
+
+<span class="kw">import</span> subprocess, sys, os, os.path, shutil, collections, pickle, string, datetime, time, fnmatch
+<span class="kw">from</span> collections <span class="kw">import</span> defaultdict
+<span class="kw">from</span> datetime <span class="kw">import</span> datetime <span class="kw">as</span> dt
+<span class="kw">from</span> datetime <span class="kw">import</span> date
+
+setAutoWaitTimeout(<span class="dig">1200</span>)
+myScriptPath = <span class="str">"/home/miphilli/Dropbox/5-Permanent/Sikuli/Linux/Astro/Planetary/v10"</span>
+<span class="kw">if</span> <span class="kw">not</span> myScriptPath <span class="kw">in</span> sys.path: sys.path.append(myScriptPath)
+<span class="cmt"># Major rework on 20111128
+</span><span class="cmt">#
+</span><span class="cmt"># Define STATIC variables
+</span><span class="cmt">#
+</span><span class="cmt"># Major rework 20121022 - Functions, CPU watch and loaddict
+</span><span class="cmt"># Major rework 20121105 - Exceptions, load dict from os.listdir for real caps
+</span>fileloaderror = <img src="ZlAstronomyl.png" />
+<span class="cmt">#wait1("JBufferingan.png")
+</span><span class="cmt">#wait2("1355554016019.png")
+</span>
+CMD = <span class="str">"top -b -n 10 | gawk '/AutoStakkert/ {print $9}'"</span>
+test = True
+cpuMax = <span class="dig">10</span>
+
+<span class="kw">def</span> AS2CPU():
+    <span class="kw">while</span> True:
+        RegistaxCPU = os.popen(CMD).readlines()
+        cpu = float(RegistaxCPU[<span class="dig">0</span>])
+        <span class="kw">if</span> test: <span class="kw">print</span> cpu
+        <span class="kw">if</span> cpu &lt; cpuMax : <span class="kw">break</span>
+        <span class="skw">sleep</span>(<span class="dig">5</span>)
+        <span class="kw">print</span>(RegistaxCPU)
+
+
+<span class="kw">def</span> AS2(DATE, TIME):
+    switchApp(<span class="str">"AutoStakkert"</span>)
+    run(<span class="str">"killall nautilus"</span>)
+    <span class="skw">sleep</span>(<span class="dig">15</span>)
+    run(<span class="str">"nautilus "</span>+SORTED+<span class="str">"/"</span>+DATE+<span class="str">"/"</span> + TIME + <span class="str">" --geometry=1600x475+76+575"</span>)
+    <span class="skw">sleep</span>(<span class="dig">2</span>)
+    switchApp(TIME)
+    <span class="skw">sleep</span>(<span class="dig">2</span>)
+    <span class="skw">type</span>(<span class="str">"a"</span>,KEY_CTRL)
+    <span class="skw">sleep</span>(<span class="dig">2</span>)
+    <span class="skw">click</span>(Pattern(<img src="RED.png" />).similar(<span class="dig">0.52</span>))
+    switchApp(TIME)
+    <span class="skw">sleep</span>(<span class="dig">2</span>)
+    <span class="skw">type</span>(<span class="str">"a"</span>,KEY_CTRL)
+    <span class="skw">sleep</span>(<span class="dig">2</span>)
+    <span class="skw">dragDrop</span>(Pattern(<img src="RED.png" />).similar(<span class="dig">0.52</span>), Pattern(<img src="1Qpen.png" />).similar(<span class="dig">0.50</span>)) <span class="cmt"># SINGLE &amp; RGB?</span>
+<span class="cmt">#    dragDrop(Pattern("1350914667319.png").similar(0.77),Pattern("3tackIREDFit.png").similar(0.55).targetOffset(6,60))
+</span>
+<span class="cmt">#    dragDrop(Pattern("1350914667319.png").similar(0.39), Pattern("1Open.png").similar(0.52)) #BEST RGB
+</span>
+
+<span class="cmt">#    hover(Pattern("1350914667319.png").similar(0.49))
+</span><span class="cmt">#    drag(getLastMatch)
+</span><span class="cmt">#    dropAt(Pattern("1Open.png").similar(0.52), 2)
+</span>    <span class="skw">sleep</span>(<span class="dig">10</span>)
+    os.system(<span class="str">"killall nautilus"</span>)
+    switchApp(<span class="str">"AutoStakkert"</span>)
+    <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+    <span class="skw">click</span>(Pattern(<img src="WidthHeightS.png" />).targetOffset(<span class="dig">20</span>,-<span class="dig">91</span>))
+    <span class="skw">sleep</span>(<span class="dig">2</span>)
+    <span class="skw">click</span>(Pattern(<img src="WidthHeightS.png" />).targetOffset(-<span class="dig">9</span>,<span class="dig">180</span>))
+    <span class="skw">sleep</span>(<span class="dig">2</span>)
+    <span class="skw">click</span>(Pattern(<img src="AdvancedSett.png" />).targetOffset(-<span class="dig">17</span>,-<span class="dig">22</span>))
+    <span class="skw">sleep</span>(<span class="dig">2</span>)
+    <span class="skw">click</span>(Pattern(<img src="AdvancedSett.png" />).targetOffset(-<span class="dig">8</span>,<span class="dig">52</span>))
+    AS2CPU()
+    <span class="skw">wait</span>(Pattern(<img src="1355554016019.png" />).similar(<span class="dig">0.77</span>))
+    AS2CPU()
+    <span class="skw">wait</span>(Pattern(<img src="1355554016019.png" />).similar(<span class="dig">0.77</span>))
+    AS2CPU()
+<span class="cmt">#Read most recent DATE and times within
+</span>SORTED = <span class="str">'/Astronomy/Sorted/2.1-FilterSorted/'</span>
+DATES = os.listdir(SORTED)
+DATE = sorted(DATES)[-<span class="dig">1</span>]
+DATEfolder=os.path.join(SORTED, DATE)
+TIMES = sorted(os.listdir(DATEfolder))
+
+<span class="cmt">#Set expiration for 60 days from time of script execution
+</span>days45=datetime.timedelta(days=<span class="dig">45</span>)
+today = date.today()
+expDATE=str(today+days45)
+
+<span class="cmt">#Archive var section
+</span>dirincludes = <span class="str">'AS_'</span>
+staleraws  = <span class="str">'/Astronomy/Temp/Corianders-Expiring--'</span>+expDATE
+stackroot = <span class="str">'/Astronomy/Sorted/2.2Stacked'</span>
+DropboxCopy = <span class="str">'/home/miphilli/Dropbox/4-Temp/AstroStacks'</span>
+
+
+<span class="cmt">#BODY OF LOOP
+</span><span class="cmt">#Verify cleanup of workspace
+</span>os.popen(<span class="str">"killall workrave"</span>)
+os.popen(<span class="str">"killall cairo-dock"</span>)
+os.popen(<span class="str">"killall AutoStakkert.exe"</span>)
+os.popen(<span class="str">"killall nautilus"</span>)
+os.popen(<span class="str">"/home/miphilli/Documents/Dropbox/5-Permanent/Astronomy/Software/AutoStakkert/AutoStakkert.exe&amp;"</span>)
+
+
+<span class="kw">print</span> <span class="str">"Found "</span>+str(TIMES)
+<span class="kw">for</span> TIME <span class="kw">in</span> sorted(TIMES):
+        AS2(DATE, TIME)
+        os.system(<span class="str">"/home/miphilli/Dropbox/5-Permanent/Scripts/Astronomy/Planetary/v10BETA/StackMover.py"</span>)
+</pre>
+</body>
+</html>

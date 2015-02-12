@@ -1,0 +1,130 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }
+
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>AS2_08.sikuli\AS2-MAP+15xWL.sikuli</h2> <a href="AS2_08.sikuli\AS2-MAP+15xWL.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+<span class="kw">import</span> subprocess, sys, os, os.path, shutil, ntpath, re
+<span class="kw">from</span> SimpleXMLRPCServer <span class="kw">import</span> SimpleXMLRPCServer <span class="kw">as</span> Server
+srv = Server((<span class="str">"127.0.0.1"</span>, <span class="dig">1337</span>),allow_none=True) <span class="cmt"># as an example on the same machine</span>
+<span class="kw">if</span> <span class="kw">not</span> srv: exit(<span class="dig">1</span>)
+<span class="cmt">#
+</span>
+setAutoWaitTimeout(<span class="dig">1200</span>)
+<span class="cmt"># Major rework on 20111128
+</span><span class="cmt">#
+</span><span class="cmt"># Define STATIC variables
+</span><span class="cmt">#
+</span><span class="cmt"># Major rework 20121022 - Functions, CPU watch and loaddict
+</span><span class="cmt"># Major rework 20121105 - Exceptions, load dict from os.listdir for real caps
+</span>fileloaderror = <img src="ZlAstronomyl.png" />
+
+
+<span class="kw">def</span> AS2(FOLDER):
+    switchApp(<span class="str">"AutoStakkert"</span>)
+    <span class="skw">click</span>(Pattern(<img src="1Qpen.png" />).similar(<span class="dig">0.50</span>)) <span class="cmt"># SINGLE &amp; RGB?</span>
+    <span class="skw">sleep</span>(<span class="dig">1</span>)
+    <span class="skw">type</span>(<span class="str">"n"</span>,KEY_ALT)
+    <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+    paste(FOLDER)
+    <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+    <span class="skw">type</span>(Key.ENTER)
+    <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+    <span class="cmt">#click(Pattern("1374247851439.png").similar(0.43))
+</span>    <span class="skw">click</span>(Pattern(<img src="1389797569446.png" />).similar(<span class="dig">0.28</span>).targetOffset(<span class="dig">387</span>,<span class="dig">128</span>))
+
+    <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+    <span class="skw">type</span>(<span class="str">"a"</span>,KEY_CTRL)
+    <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+    <span class="skw">type</span>(Key.ENTER)
+    <span class="skw">sleep</span>(<span class="dig">2</span>)
+    <span class="skw">dragDrop</span>(Pattern(<img src="1378900299511.png" />).targetOffset(-<span class="dig">179</span>,-<span class="dig">6</span>),Pattern(<img src="1378900299511.png" />).targetOffset(-<span class="dig">43</span>,-<span class="dig">5</span>))
+    <span class="skw">sleep</span>(<span class="dig">2</span>)
+    <span class="skw">click</span>(Pattern(<img src="WidthHeightS.png" />).similar(<span class="dig">0.80</span>).targetOffset(<span class="dig">20</span>,-<span class="dig">91</span>))
+    <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+    <span class="skw">click</span>(Pattern(<img src="WidthHeightS.png" />).similar(<span class="dig">0.83</span>).targetOffset(-<span class="dig">9</span>,<span class="dig">180</span>))
+    <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+    <span class="skw">click</span>(Pattern(<img src="AdvancedSett.png" />).similar(<span class="dig">0.59</span>).targetOffset(-<span class="dig">17</span>,-<span class="dig">22</span>))
+    <span class="skw">sleep</span>(<span class="dig">0.5</span>)
+    <span class="skw">click</span>(Pattern(<img src="AdvancedSett.png" />).similar(<span class="dig">0.48</span>).targetOffset(-<span class="dig">8</span>,<span class="dig">52</span>))
+    <span class="skw">sleep</span>(<span class="dig">10</span>)
+    <span class="skw">wait</span>(Pattern(<img src="1355554016019.png" />).similar(<span class="dig">0.77</span>))
+<span class="cmt">#    AS2CPU()
+</span>    <span class="skw">wait</span>(Pattern(<img src="1355554016019.png" />).similar(<span class="dig">0.77</span>))
+    <span class="kw">if</span> exists:(<span class="skw">click</span>(Pattern(<img src="1395884074220.png" />).similar(<span class="dig">0.36</span>).targetOffset(<span class="dig">301</span>,-<span class="dig">262</span>)))
+<span class="cmt">#    AS2CPU()
+</span><span class="cmt">#Read most recent DATE and times within
+</span>
+<span class="cmt">#popup('I am here')
+</span>
+srv.register_function(AS2)
+srv.serve_forever()
+</pre>
+</body>
+</html>
