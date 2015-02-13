@@ -12,7 +12,7 @@ from collections import defaultdict
 #Editable vars
 Sikuli='D:\\D-Permanent\\Software\\Win7Installs\\Sikuli\\runIDE.cmd'
 Sikuliarg1='-r'
-scriptname='D:\\D-Permanent\\Scripts\\Git\\Planetary\\v10.1\\AstraImage.sikuli'
+scriptname='D:\\D-Permanent\\Scripts\\Git\\Planetary\\AstraImage.sikuli'
 Duration=12
 COLORS=['R', 'G', 'B', 'IR']
 Ver = 'v10'

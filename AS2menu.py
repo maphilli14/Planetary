@@ -66,3 +66,4 @@ def m3(planet):
 ################## RUNTIME ###################
 
 m1()
+os.popen2('%windir%\\system32\\rundll32.exe user32.dll,LockWorkStation') # Locks screen when done
