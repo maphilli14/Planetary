@@ -19,6 +19,11 @@ Ver = 'v10'
 AS2ed = "AS2ed"
 AIpath='D:\D-Permanent\Software\Win7Installs\Astra Image 3.0 Pro'
 Stacked='D:\\B-Sorted\\Astronomy\\Planetary\\20-Stacked\\'
+RRegex='^Drizzle15_.*-R.*'
+GRegex='^Drizzle15_.*-G.*'
+BRegex='^Drizzle15_.*-B.*'
+IRRegex='^Drizzle15_.*-IR.*'
+
 
 def DATETIME():
      global DATE,DATES,TIMES,TIME,QueuedTimes
@@ -172,7 +177,11 @@ def main(PSF,Iter,AISettingsVer):
           count=count+1
           print "__________________________________________________________________________________"
           print
-          STACKEDFILES=os.listdir(os.path.join(Stacked,DATE,TIME,'v10'))
+          try:
+               STACKEDFILES=os.listdir(os.path.join(Stacked,DATE,TIME,'v10'))
+          except:
+               print 'This directory is EMPTY, please fix via pre checks like in AS2'
+               pass
           RGBSharp='Ver-'+AISettingsVer+'-RGB-'+DATE+'-'+TIME
           #catch empty dirs
           if len(STACKEDFILES)==0:
@@ -195,10 +204,10 @@ def main(PSF,Iter,AISettingsVer):
           #This helps us pull out the files to sharpen by color and then combine them later
           #
           for F in STACKEDFILES:
-               matchR=re.search(r'^Drizzle15_\w.*-R-\w*.tif*$', F)
-               matchG=re.search(r'^Drizzle15_\w.*-G-\w*.tif*$', F)
-               matchB=re.search(r'^Drizzle15_\w.*-B-\w*.tif*$', F)
-               matchIR=re.search(r'^Drizzle15_\w.*-IR-\w*.tif*$', F)
+               matchR=re.search(RRegex, F)
+               matchG=re.search(GRegex, F)
+               matchB=re.search(BRegex, F)
+               matchIR=re.search(IRRegex, F)
                if matchR:
                     #print 'R= '+F
                     ColorFiles['R']=[F,'']
@@ -230,10 +239,10 @@ def main(PSF,Iter,AISettingsVer):
           #Append existing dictionary for sharps in the second (ie [1]) postion of the value / list
           #
           for F in STACKEDFILES:
-               matchR=re.search(r'Ver-'+AISettingsVer+'-Drizzle15_\w.*-R-\w*.tif*$', F)
-               matchG=re.search(r'Ver-'+AISettingsVer+'-Drizzle15_\w.*-G-\w*.tif*$', F)
-               matchB=re.search(r'Ver-'+AISettingsVer+'-Drizzle15_\w.*-B-\w*.tif*$', F)
-               matchIR=re.search(r'Ver-'+AISettingsVer+'-Drizzle15_\w.*-IR-\w*.tif*$', F)
+               matchR=re.search(r'Ver-'+AISettingsVer+'-Drizzle15_.*-R.*', F)
+               matchG=re.search(r'Ver-'+AISettingsVer+'-Drizzle15_.*-G.*', F)
+               matchB=re.search(r'Ver-'+AISettingsVer+'-Drizzle15_.*-B.*', F)
+               matchIR=re.search(r'Ver-'+AISettingsVer+'-Drizzle15_.*-IR.*', F)
                if matchR:
                     #print 'Ver'+AISettingsVer+'R= '+F
                     ColorFiles['R'][1]=F

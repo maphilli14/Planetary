@@ -156,7 +156,7 @@ def sharp(ToBeSharped, DATE, TIME,AISettingsVer):
     paste('Ver-'+AISettingsVer+'-'+ToBeSharped)
     sleep(0.5)
     type("\n")
-    if exists(Pattern("1423532239029.png").targetOffset(57,33),2):
+    if exists(Pattern("1423956186162.png").similar(0.42).targetOffset(80,32),2):
         click(getLastMatch())
 
     if exists(Pattern("1394391875003.png").similar(0.56).targetOffset(-3,88),2):
