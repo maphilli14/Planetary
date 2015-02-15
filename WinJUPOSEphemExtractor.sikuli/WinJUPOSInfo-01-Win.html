@@ -1,0 +1,159 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }
+
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>WinJUPOSEphemExtractor.sikuli\clipboard-as-variable-with-screentext-find.sikuli</h2> <a href="WinJUPOSEphemExtractor.sikuli\clipboard-as-variable-with-screentext-find.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+<span class="kw">import</span> os
+arcsec=<span class="str">'\"'</span>
+degree=<span class="str">"°"</span>
+CurrentFile=<span class="str">"D:\\D-Permanent\\Astronomy\\Logs\\currentephem.txt"</span>
+file = open(CurrentFile,<span class="str">"a"</span>)
+<span class="cmt">#
+</span>ISODATE=<span class="str">""</span>
+<span class="cmt">#
+</span><span class="cmt">#
+</span><span class="cmt">#WINJUPOS
+</span><span class="cmt">#
+</span>WinJ=(Pattern(<img src="3541ddmm1835.png" />).similar(<span class="dig">0.42</span>).targetOffset(-<span class="dig">460</span>,-<span class="dig">333</span>))
+Cmsys=(<img src="1378563504488.png" />)
+Alt=(<img src="1378563517901.png" />)
+Eph=(<img src="1378563525940.png" />)
+
+
+<span class="cmt">#
+</span>os.popen(<span class="str">"killall workrave"</span>)
+switchApp(<span class="str">"WinJUPOS"</span>)
+<span class="cmt">#
+</span><span class="cmt">#CMSYS
+</span><span class="cmt">#
+</span>hover(Cmsys)
+<span class="skw">rightClick</span>(Cmsys)
+<span class="skw">sleep</span>(<span class="dig">0.5</span>)
+<span class="skw">type</span>(<span class="str">"c"</span>)
+<span class="skw">sleep</span>(<span class="dig">0.5</span>)
+UTandCM=ALTtext = Env.getClipboard()
+DATE=UTandCM.split()[<span class="dig">0</span>]
+TIME=UTandCM.split()[<span class="dig">2</span>]+UTandCM.split()[<span class="dig">3</span>]+<span class="str">'C'</span>
+CMSYStext=UTandCM[<span class="dig">35</span>:]
+
+
+<span class="cmt">#
+</span><span class="cmt">#ALT
+</span>hover(Alt)
+<span class="skw">dragDrop</span>(Pattern(<img src="1378563517901.png" />).targetOffset(-<span class="dig">337</span>,-<span class="dig">27</span>),Pattern(<img src="1378563517901.png" />).targetOffset(<span class="dig">98</span>,<span class="dig">19</span>))
+<span class="skw">type</span>(<span class="str">"c"</span>, KEY_CTRL)
+ALTtext = Env.getClipboard()
+ALT = ALTtext.split()[<span class="dig">2</span>]
+<span class="cmt">#
+</span><span class="cmt">#Ephemerdis
+</span><span class="cmt">#
+</span>hover(Eph)
+<span class="skw">rightClick</span>(Eph)
+<span class="skw">sleep</span>(<span class="dig">0.5</span>)
+<span class="skw">type</span>(<span class="str">"c"</span>)
+<span class="skw">sleep</span>(<span class="dig">0.5</span>)
+Ephtext = Env.getClipboard()
+
+E=Ephtext.split()
+
+Planet=E[<span class="dig">0</span>]
+Dia=E[<span class="dig">51</span>]
+Mag=E[<span class="dig">71</span>]
+Ring=E[<span class="dig">80</span>].rstrip(<span class="str">','</span>)
+Elong=E[<span class="dig">39</span>]
+ElongDir=E[<span class="dig">41</span>]
+LoS=E[<span class="dig">87</span>]
+<span class="cmt">#=E[]
+</span>
+
+<span class="cmt">#
+</span><span class="cmt">#RESULTS
+</span><span class="cmt">#
+</span>R=(DATE+<span class="str">"  -  "</span>+TIME+<span class="str">"\n\n"</span>+CMSYStext+<span class="str">"\n\n"</span>+
+        <span class="str">"Dia:"</span>+Dia+<span class="str">", mag:"</span>+Mag+<span class="str">"\n"</span>+
+        <span class="str">"Alt:"</span>+ALT+<span class="str">", Ring:"</span>+Ring+<span class="str">"\nElong: "</span>+Elong+<span class="str">"("</span>+ElongDir+<span class="str">")"</span>)
+<span class="cmt">#popup(R)
+</span><span class="cmt">#UnicodeEncodeError: 'ascii' codec can't encode character u'\xb0' in position 39: ordinal not in range(128)
+</span><span class="cmt">#file.write(R)
+</span>
+<span class="cmt">#
+</span><span class="cmt">#
+</span>
+os.popen(<span class="str">"notepad "</span>+CurrentFile)
+<span class="skw">sleep</span>(<span class="dig">5</span>)
+<span class="skw">type</span>(Key.END, KEY_CTRL)
+<span class="skw">sleep</span>(<span class="dig">0.5</span>)
+paste(R)
+<span class="skw">type</span>(<span class="str">'s'</span>, KEY_CTRL)
+<span class="skw">sleep</span>(<span class="dig">2</span>)
+os.popen(<span class="str">"workrave"</span>)
+</pre>
+</body>
+</html>
