@@ -51,7 +51,7 @@ def m2():
     else: 
       print "Unknown Option Selected!\n"
       break
-  AS2_08.AS2(AP,Drizzle)
+  AS2.AS2(AP,Drizzle)
   
 
 def m3(planet):

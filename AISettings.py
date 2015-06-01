@@ -12,7 +12,7 @@ Jupiter={
 'VerK':('1.4','10', 'Avg seeing/I use LRd Expo on AS2 Conv on RGB final, saving soft too'),			#
 'VerL':('1.3','13', 'Avg seeing/I use LRd Expo on AS2 RAW on RGB final, saving soft too'),			#
 'VerM':('1.2','17', 'Avg+ seeing / I use LRd Expo on AS2 raw'),							# May have custom deviations
-'VerN':('1.1','17', 'Avg+ seeing / I use LRd Expo on AS2 raw'),							#
+'VerN':('1.1','17', 'ASI174 SETTINGS - catidate default'),							# ASI174 SETTINGS for G and B on 20150315
 'VerO':('1.1','15', 'Avg+ seeing / I use LRd Expo on AS2 raw'),							#
 'VerP':('1.1','16', 'Avg+ seeing / I use LRd Expo on AS2 raw'),							# DEFAULT
 'VerQ':('1.2','15', 'Good default cantidate, Smaller Jupiter settings'),							# DEFAULT

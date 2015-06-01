@@ -16,7 +16,7 @@ FCfiletype='avi'
 cli = xmlrpclib.ServerProxy("http://127.0.0.1:1337",allow_none=True)
 Sikuli='D:\\D-Permanent\\Software\\Win7Installs\\Sikuli\\runIDE.cmd'
 Sikuliarg1='-r'
-scriptname='D:\\D-Permanent\\Scripts\\Git\\Planetary\\v10.1\\AS2.sikuli'
+scriptname='C:\\Users\\miphilli\\Documents\\GitHub\\Planetary\\AS2.sikuli'
 proc = subprocess.Popen([Sikuli,Sikuliarg1,scriptname])
 time.sleep(15)
 
@@ -25,8 +25,8 @@ def AS2(AP,Drizzle):
         # Variable defintions
         #
         Win7Disk='C:\\'
-        C='C:\\'
-        D='D:\\'
+        C='D:\\'
+        D='E:\\'
         FC=os.path.join(Win7Disk,'Personal\\A-Inbox\\FireCaptures\\')
         #FC=os.path.join('D:\\A-Inbox\\1-Corianders-primary')
         Ver = 'v10'
@@ -116,6 +116,8 @@ def AS2(AP,Drizzle):
                                                 print "Working on "+TIME+" ("+str(count)+" of "+str(len(TIMES))+")"
                                                 count=count+1
                                                 print '========================================================='
+                                                GTime=TIME
+                                                '''
                                                 # Get mid-timestamp of run and set variable
                                                 for P,S,F in os.walk(os.path.join(FC,planet,DATE,TIME)):
                                                         print P
@@ -128,15 +130,15 @@ def AS2(AP,Drizzle):
                                                                 if '.ser' or '.avi' in f:
                                                                         if '_G' or '-G' in f:
                                                                                 print 'Setting Capture time to match the start of Green:'
-                                                                                GTime=TimeMatch(f)
-                                                                                print 'Mid time is= '+GTime
+                                                                                GTime=TimeMatch(f)                                                                                
                                                                         elif '_R' or '-R' in f:
                                                                                 print 'Setting Capture time to match the start of RED as Green wasn\'t found:'
                                                                                 GTime=TimeMatch(f)
-                                                                                print 'Mid time is= '+GTime
                                                                 else:
                                                                         print 'No capture videos found'
+                                                                        GTime=TIME
                                                                         print
+                                                '''
                                                 FILES=os.listdir(os.path.join(FC,planet,DATE,TIME))
                                                 # Compare AVI qty to TIF qty and get Green time
                                                 AVIs=[]

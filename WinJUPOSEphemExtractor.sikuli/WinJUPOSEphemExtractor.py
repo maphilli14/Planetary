@@ -26,10 +26,11 @@ ISODATE=""
 #
 #WINJUPOS
 #
-Cmsys=(Pattern("system.png").similar(0.29))
+#Cmsys=(Pattern("system.png").similar(0.29))
 
-Eph=(Pattern("ephem.png").similar(0.36))
-
+#Eph=(Pattern("ephem.png").similar(0.36))
+Cmsys=(Pattern("1433027845741.png").similar(0.29))
+Eph=(Pattern("1433027864991.png").similar(0.22))
 
 #
 os.popen("killall workrave")
@@ -54,7 +55,9 @@ CMSYStext=UTandCM[35:].lstrip()
 #
 #ALT
 #hover(Alt)
-dragDrop(Pattern("alt.png").similar(0.40).targetOffset(-317,-30),Pattern("alt.png").similar(0.36).targetOffset(162,21))
+#dragDrop(Pattern("alt.png").similar(0.40).targetOffset(-317,-30),Pattern("alt.png").similar(0.36).targetOffset(162,21))
+dragDrop(Pattern("1433027942175.png").targetOffset(-407,-22), Pattern("1433027946540.png").targetOffset(128,18))
+
 type("c", KEY_CTRL)
 ALTtext = Env.getClipboard()
 ALT = ALTtext.split()[2]

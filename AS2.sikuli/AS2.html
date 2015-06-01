@@ -111,18 +111,28 @@ percent=<span class="str">'75'</span>
     <span class="skw">dragDrop</span>(Pattern(<img src="1378900299511.png" />).targetOffset(-<span class="dig">179</span>,-<span class="dig">6</span>),Pattern(<img src="1378900299511.png" />).targetOffset(-<span class="dig">43</span>,-<span class="dig">5</span>))
     <span class="skw">sleep</span>(<span class="dig">2</span>)
     <span class="cmt">#Selection of MP v Single
-</span>    <span class="kw">if</span> AP == <span class="str">'s'</span>:
+</span>    <span class="kw">print</span>(<span class="str">'AP = '</span>+str(AP))
+    <span class="kw">if</span> AP == <span class="str">'s'</span>:
+        <span class="kw">print</span>(<span class="str">'Using Single AP method'</span>)
         <span class="skw">click</span>(Pattern(<img src="WidthHeightS.png" />).similar(<span class="dig">0.69</span>).targetOffset(-<span class="dig">54</span>,-<span class="dig">137</span>))
         <span class="skw">click</span>(Pattern(<img src="1415665268913.png" />).targetOffset(-<span class="dig">52</span>,<span class="dig">28</span>))
         <span class="skw">type</span>(<span class="str">'0'</span>+Key.TAB+<span class="str">'0'</span>+Key.TAB+<span class="str">'0'</span>+Key.TAB+str(percent))
         <span class="skw">click</span>(Pattern(<img src="1415665268913.png" />).targetOffset(-<span class="dig">53</span>,-<span class="dig">13</span>))
         <span class="skw">type</span>(<span class="str">'0'</span>+Key.TAB+<span class="str">'0'</span>+Key.TAB+<span class="str">'0'</span>+Key.TAB+<span class="str">'0'</span>)
-    <span class="kw">elif</span> AP == <span class="str">'m'</span>:
+    <span class="kw">else</span>:
+        <span class="kw">pass</span>
+    <span class="kw">if</span> AP == <span class="str">'m'</span>:
+        <span class="kw">print</span>(<span class="str">'Using Multi AP method'</span>)
         <span class="skw">click</span>(Pattern(<img src="WidthHeightS.png" />).similar(<span class="dig">0.69</span>).targetOffset(-<span class="dig">53</span>,-<span class="dig">118</span>))
         <span class="skw">click</span>(Pattern(<img src="1398957372328.png" />).targetOffset(-<span class="dig">7</span>,<span class="dig">160</span>))
-
+        <span class="kw">print</span>(<span class="str">'Looking for percent'</span>)
+        <span class="skw">click</span>(Pattern(<img src="1427196763553.png" />).targetOffset(<span class="dig">54</span>,<span class="dig">45</span>))
+        <span class="skw">type</span>(Key.BACKSPACE)
+        <span class="skw">sleep</span>(<span class="dig">0.1</span>)
+        <span class="skw">type</span>(str(percent))
+        <span class="skw">sleep</span>(<span class="dig">0.1</span>)
     <span class="kw">else</span>:
-        <span class="skw">click</span>(Pattern(<img src="WidthHeightS.png" />).similar(<span class="dig">0.69</span>).targetOffset(-<span class="dig">54</span>,-<span class="dig">137</span>))
+        <span class="kw">pass</span>
     <span class="skw">sleep</span>(<span class="dig">0.5</span>)
     <span class="cmt">#Selection of Drizzle Options
 </span>    <span class="kw">if</span> Drizzle == <span class="str">'1'</span>:

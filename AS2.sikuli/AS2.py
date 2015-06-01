@@ -39,18 +39,28 @@ def AS2(FOLDER,AP,Drizzle):
     dragDrop(Pattern("1378900299511.png").targetOffset(-179,-6),Pattern("1378900299511.png").targetOffset(-43,-5))
     sleep(2)
     #Selection of MP v Single
+    print('AP = '+str(AP))
     if AP == 's':
+        print('Using Single AP method')
         click(Pattern("WidthHeightS.png").similar(0.69).targetOffset(-54,-137))
         click(Pattern("1415665268913.png").targetOffset(-52,28))
         type('0'+Key.TAB+'0'+Key.TAB+'0'+Key.TAB+str(percent))
         click(Pattern("1415665268913.png").targetOffset(-53,-13))
         type('0'+Key.TAB+'0'+Key.TAB+'0'+Key.TAB+'0')
-    elif AP == 'm':
+    else:
+        pass
+    if AP == 'm':
+        print('Using Multi AP method')
         click(Pattern("WidthHeightS.png").similar(0.69).targetOffset(-53,-118))
         click(Pattern("1398957372328.png").targetOffset(-7,160))
-        
+        print('Looking for percent')
+        click(Pattern("1427196763553.png").targetOffset(54,45))
+        type(Key.BACKSPACE)
+        sleep(0.1)
+        type(str(percent))
+        sleep(0.1)
     else:
-        click(Pattern("WidthHeightS.png").similar(0.69).targetOffset(-54,-137))
+        pass
     sleep(0.5)
     #Selection of Drizzle Options
     if Drizzle == '1':
