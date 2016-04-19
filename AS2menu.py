@@ -7,6 +7,7 @@
 '''
 
 import AS2
+import os
 from oslib import bcolors
 
 def m1():
@@ -66,4 +67,6 @@ def m3(planet):
 ################## RUNTIME ###################
 
 m1()
+print
+print 'Done Stacking'
 os.popen2('%windir%\\system32\\rundll32.exe user32.dll,LockWorkStation') # Locks screen when done

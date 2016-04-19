@@ -14,7 +14,7 @@ setAutoWaitTimeout(1200)
 # 20140501 Begin passing custom MP v Single and Drizzle selctions from menus
 #
 fileloaderror = "ZlAstronomyl.png"
-percent='75'
+percent='66'
 
 
 def AS2(FOLDER,AP,Drizzle):

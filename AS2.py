@@ -29,6 +29,7 @@ def AS2(AP,Drizzle):
         D='E:\\'
         FC=os.path.join(Win7Disk,'Personal\\A-Inbox\\FireCaptures\\')
         #FC=os.path.join('D:\\A-Inbox\\1-Corianders-primary')
+        #FC=os.path.join('E:\\Personal\\A-Inbox\\1-Corianders-primary')
         Ver = 'v10'
         Stacks='D:\\B-Sorted\\Astronomy\\Planetary\\20-Stacked'
         # Set expiration for 60 days from time of script execution

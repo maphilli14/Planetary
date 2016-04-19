@@ -98,12 +98,12 @@ CurrentFile=<span class="str">"D:\\D-Permanent\\Dropbox\\D-Permanent\\Astronomy\
 </span><span class="cmt">#
 </span><span class="cmt">#WINJUPOS
 </span><span class="cmt">#
-</span><span class="cmt">#Cmsys=(Pattern("system.png").similar(0.29))
-</span>
-<span class="cmt">#Eph=(Pattern("ephem.png").similar(0.36))
-</span>Cmsys=(Pattern(<img src="1433027845741.png" />).similar(<span class="dig">0.29</span>))
-Eph=(Pattern(<img src="1433027864991.png" />).similar(<span class="dig">0.22</span>))
+</span>Cmsys=(Pattern(<img src="system.png" />).similar(<span class="dig">0.29</span>))
 
+Eph=(Pattern(<img src="ephem.png" />).similar(<span class="dig">0.36</span>))
+<span class="cmt">#Cmsys=(Pattern("1433027845741.png").similar(0.29))
+</span><span class="cmt">#Eph=(Pattern("1433027864991.png").similar(0.22))
+</span>
 <span class="cmt">#
 </span>os.popen(<span class="str">"killall workrave"</span>)
 switchApp(<span class="str">"WinJUPOS"</span>)
@@ -127,9 +127,9 @@ CMSYStext=UTandCM[<span class="dig">35</span>:].lstrip()
 <span class="cmt">#
 </span><span class="cmt">#ALT
 </span><span class="cmt">#hover(Alt)
-</span><span class="cmt">#dragDrop(Pattern("alt.png").similar(0.40).targetOffset(-317,-30),Pattern("alt.png").similar(0.36).targetOffset(162,21))
-</span><span class="skw">dragDrop</span>(Pattern(<img src="1433027942175.png" />).targetOffset(-<span class="dig">407</span>,-<span class="dig">22</span>), Pattern(<img src="1433027946540.png" />).targetOffset(<span class="dig">128</span>,<span class="dig">18</span>))
-
+</span><span class="skw">dragDrop</span>(Pattern(<img src="alt.png" />).similar(<span class="dig">0.40</span>).targetOffset(-<span class="dig">317</span>,-<span class="dig">30</span>),Pattern(<img src="alt.png" />).similar(<span class="dig">0.36</span>).targetOffset(<span class="dig">162</span>,<span class="dig">21</span>))
+<span class="cmt">#dragDrop(Pattern("1433027942175.png").targetOffset(-407,-22), Pattern("1433027946540.png").targetOffset(128,18))
+</span>
 <span class="skw">type</span>(<span class="str">"c"</span>, KEY_CTRL)
 ALTtext = Env.getClipboard()
 ALT = ALTtext.split()[<span class="dig">2</span>]

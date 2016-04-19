@@ -48,6 +48,7 @@ Mars={
 'VerG':('1.2','16', 'MOST USED'), 		# DEFAULT
 'VerH':('1.1','15', 'LRd Expo Drizzle'), 	# 
 'VerI':('1.6','18', '3x Best'), 		# 
-'VerJ':('1.3','16', '')  			# 
+'VerJ':('1.3','16', ''),  			#
+'VerK':('1.0','13', 'Small ~5"')		# 
 }
 
